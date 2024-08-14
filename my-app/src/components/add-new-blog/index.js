@@ -19,7 +19,7 @@ import {
 
 import { DialogClose } from "@radix-ui/react-dialog";
 // ,loading,setLoading,blogFormData,setBlogFormData
-function AddnewBlog({openBlog,setOpenBlog,loading,setLoading,blogFormData,setBlogFormData,handelSavedBlogData}){
+function AddnewBlog({openBlog,setOpenBlog,setCurrentEditedblokID,currentEditedblokID,loading,setLoading,blogFormData,setBlogFormData,handelSavedBlogData}){
   // const [blogFormData, setBlogFormData] = useState({
   //   title: '',
   //   description: '',
@@ -40,14 +40,26 @@ function AddnewBlog({openBlog,setOpenBlog,loading,setLoading,blogFormData,setBlo
 
       <Fragment>
            <div>
-  <Button onClick={() => setOpenBlog(true)}>Add New Block</Button>
+  <Button onClick={() => setOpenBlog(true)}>Add New Block </Button>
 </div>
 
 {/* new one */}
-<Dialog open={openBlog} onOpenChange={setOpenBlog}>
+<Dialog open={openBlog} onOpenChange={()=>{
+
+setOpenBlog(false);
+setBlogFormData({
+
+    title: '',
+  description: ''
+})
+
+setCurrentEditedblokID(null)
+
+
+}}>
       <DialogContent className="sm:max-w-md" aria-describedby="dialog-description">
         <DialogHeader>
-          <DialogTitle>Add New Blogs</DialogTitle>
+          <DialogTitle > {currentEditedblokID ? ' Edit blog': 'Add New Blogs'}  </DialogTitle>
         </DialogHeader>
         
         <div id="dialog-description" className="grid gap-4 py-4">
@@ -101,7 +113,10 @@ function AddnewBlog({openBlog,setOpenBlog,loading,setLoading,blogFormData,setBlo
           type="submit"
           
           
-          >Save changes</Button>
+          >{
+
+            loading ? 'saving changes' : 'save change'
+          }</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
